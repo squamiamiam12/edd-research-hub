@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Hub — Ed.D</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --bg: #0d1f17;
+  --bg2: #111f19;
+  --surface: #162a20;
+  --surface2: #1c3228;
+  --surface3: #223d30;
+  --border: #2a4a38;
+  --border2: #346050;
+  --text: #e8f0eb;
+  --text2: #9ab8a4;
+  --text3: #5a7d68;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+
+  /* per-page accents */
+  --home-accent: #4ade80;
+  --home-accent-dim: #1a3d28;
+  --home-accent-text: #4ade80;
+
+  --src-accent: #60a5fa;
+  --src-accent-dim: #1a2a3d;
+  --src-accent-text: #93c5fd;
+
+  --res-accent: #f59e0b;
+  --res-accent-dim: #3d2e0a;
+  --res-accent-text: #fcd34d;
+
+  --ms-accent: #c084fc;
+  --ms-accent-dim: #2d1a3d;
+  --ms-accent-text: #d8b4fe;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: stretch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-brand {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--text);
+  padding: 0 1.5rem 0 0;
+  border-right: 1px solid var(--border);
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.nav-link {
+  font-size: 13px;
+  color: var(--text2);
+  padding: 0 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.nav-link:hover { color: var(--text); }
+
+.nav-link[data-page="home"].active   { color: var(--home-accent);  border-bottom-color: var(--home-accent); }
+.nav-link[data-page="sources"].active { color: var(--src-accent);  border-bottom-color: var(--src-accent); }
+.nav-link[data-page="research"].active { color: var(--res-accent); border-bottom-color: var(--res-accent); }
+.nav-link[data-page="milestones"].active { color: var(--ms-accent); border-bottom-color: var(--ms-accent); }
+
+/* PAGES */
+.page { display: none; max-width: 900px; margin: 0 auto; padding: 2.5rem 2rem; }
+.page.active { display: block; }
+
+@media (max-width: 640px) {
+  .page { padding: 1.25rem 1rem; }
+  nav { padding: 0 1rem; }
+  .nav-brand { display: none; }
+  .nav-link { padding: 0 0.75rem; font-size: 12px; }
+}
+
+/* PAGE ACCENT STRIPE */
+.page-header {
+  border-left: 3px solid;
+  padding: 0.25rem 0 0.25rem 1rem;
+  margin-bottom: 1.75rem;
+}
+.page-header h2 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+}
+.page-header p { font-size: 13px; color: var(--text2); margin-top: 2px; }
+
+#page-home   .page-header { border-color: var(--home-accent); }
+#page-sources .page-header { border-color: var(--src-accent); }
+#page-research .page-header { border-color: var(--res-accent); }
+#page-milestones .page-header { border-color: var(--ms-accent); }
+
+/* HERO */
+.identity-hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.identity-hero h1 {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.discipline {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--home-accent);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+
+.identity-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.875rem;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 560px) { .identity-fields { grid-template-columns: 1fr; } }
+
+.field-block {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+}
+
+.field-block.full { grid-column: 1 / -1; }
+
+.field-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.field-value { font-size: 14px; color: var(--text); line-height: 1.5; min-height: 18px; }
+.field-value.serif { font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--home-accent-text); }
+.field-value .empty { color: var(--text3); font-style: normal; font-family: var(--sans); font-size: 13px; }
+
+.edit-btn {
+  position: absolute;
+  top: 1.25rem; right: 1.25rem;
+  font-size: 12px;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface2);
+  transition: all 0.12s;
+  font-family: var(--sans);
+}
+
+.edit-btn:hover { color: var(--text); border-color: var(--border2); }
+
+/* STATS */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 500px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--home-accent);
+  display: block;
+  line-height: 1.1;
+}
+
+.stat-lbl {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 3px;
+}
+
+/* MILESTONE PREVIEW */
+.milestone-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.milestone-row h3 {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: var(--text2);
+}
+
+.milestones { display: flex; flex-direction: column; gap: 7px; }
+
+.milestone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.12s;
+  user-select: none;
+}
+
+.milestone:hover { background: var(--ms-accent-dim); border-color: var(--ms-accent); }
+.milestone.done .ms-label { text-decoration: line-through; color: var(--text3); }
+
+.ms-check {
+  width: 17px; height: 17px;
+  border: 1.5px solid var(--border2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  color: transparent;
+  transition: all 0.12s;
+}
+
+.milestone.done .ms-check {
+  background: var(--ms-accent);
+  border-color: var(--ms-accent);
+  color: #0d1f17;
+}
+
+.ms-label { font-size: 13px; flex: 1; color: var(--text); }
+.ms-date { font-size: 11px; color: var(--text3); white-space: nowrap; }
+
+/* PANELS */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.panel-head {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.panel-head h2 {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count {
+  font-size: 11px;
+  color: var(--text3);
+  background: var(--surface2);
+  padding: 2px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.panel-body { padding: 1.5rem; }
+
+/* FORMS */
+input, select, textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--text);
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color 0.15s;
+  line-height: 1.5;
+}
+
+input::placeholder, textarea::placeholder { color: var(--text3); }
+select option { background: var(--surface2); color: var(--text); }
+
+textarea { min-height: 80px; resize: vertical; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.form-row.three { grid-template-columns: 1fr 1fr 1fr; }
+@media (max-width: 500px) { .form-row, .form-row.three { grid-template-columns: 1fr; } }
+.form-col { display: flex; flex-direction: column; gap: 4px; }
+.form-full { margin-bottom: 10px; display: flex; flex-direction: column; gap: 4px; }
+
+.lbl {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text3);
+  font-weight: 500;
+}
+
+/* page-specific input focus */
+#page-sources input:focus, #page-sources select:focus, #page-sources textarea:focus { border-color: var(--src-accent); }
+#page-research input:focus, #page-research select:focus, #page-research textarea:focus { border-color: var(--res-accent); }
+#page-milestones input:focus, #page-milestones select:focus, #page-milestones textarea:focus { border-color: var(--ms-accent); }
+#page-home input:focus, .modal input:focus, .modal textarea:focus { border-color: var(--home-accent); }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: var(--sans);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  transition: all 0.12s;
+}
+
+.btn:hover { background: var(--surface3); color: var(--text); border-color: var(--border2); }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+
+.btn-home    { background: var(--home-accent-dim); color: var(--home-accent); border-color: var(--home-accent); }
+.btn-src     { background: var(--src-accent-dim);  color: var(--src-accent-text);  border-color: var(--src-accent); }
+.btn-res     { background: var(--res-accent-dim);  color: var(--res-accent-text);  border-color: var(--res-accent); }
+.btn-ms      { background: var(--ms-accent-dim);   color: var(--ms-accent-text);   border-color: var(--ms-accent); }
+
+.btn-home:hover { opacity: 0.85; }
+.btn-src:hover  { opacity: 0.85; }
+.btn-res:hover  { opacity: 0.85; }
+.btn-ms:hover   { opacity: 0.85; }
+
+/* CITE CARDS */
+.cite-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  margin-bottom: 10px;
+  background: var(--surface2);
+  position: relative;
+}
+
+.cite-apa { font-size: 13px; color: var(--text); line-height: 1.7; padding-right: 24px; }
+.cite-apa em { color: var(--src-accent-text); font-style: italic; }
+
+.cite-abstract {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: none;
+}
+
+.cite-abstract.open { display: block; }
+
+.cite-footer { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+.cite-tag {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tag-article    { background: #1a2a3d; color: #93c5fd; }
+.tag-book       { background: #2d1f0a; color: #fcd34d; }
+.tag-chapter    { background: #2d1a1a; color: #fca5a5; }
+.tag-report     { background: var(--surface3); color: var(--text2); border: 1px solid var(--border); }
+.tag-dissertation { background: #2d1a3d; color: #d8b4fe; }
+.tag-other      { background: var(--surface3); color: var(--text2); border: 1px solid var(--border); }
+
+.abstract-toggle {
+  font-size: 11px;
+  color: var(--text3);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.abstract-toggle:hover { color: var(--src-accent-text); }
+
+.del-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: none; border: none;
+  color: var(--text3); cursor: pointer;
+  font-size: 18px; line-height: 1;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: all 0.1s;
+}
+
+.del-btn:hover { background: var(--surface3); color: var(--text); }
+
+.alpha-divider {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--src-accent);
+  font-style: italic;
+  padding: 8px 0 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+
+.alpha-divider:first-child { margin-top: 0; }
+
+.item-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.item-card h4 { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; padding-right: 28px; }
+.item-card p  { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+.rq-num {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--res-accent-text);
+  background: var(--res-accent-dim);
+  padding: 1px 8px;
+  border-radius: 20px;
+  margin-bottom: 5px;
+}
+
+.scholar-initial {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--res-accent-dim);
+  color: var(--res-accent-text);
+  font-family: var(--serif);
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.scholar-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.empty-msg { font-size: 13px; color: var(--text3); font-style: italic; padding: 1rem 0; text-align: center; }
+
+/* MODALS */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(5, 15, 10, 0.75);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: 1rem;
+}
+
+.modal h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 1.5rem; }
+
+/* SEARCH */
+.search-wrap { position: relative; margin-bottom: 1.25rem; }
+.search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 15px; pointer-events: none; }
+.search-wrap input { padding-left: 32px; }
+
+.divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+/* DATA ACTIONS */
+.data-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 0 1.5rem 1.25rem;
+}
+
+/* EXPORT TEXTAREA */
+.export-pre {
+  font-size: 12px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text2);
+  background: var(--surface2);
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  max-height: 380px;
+  overflow-y: auto;
+  font-family: var(--sans);
+}
+
+/* TOAST */
+#toast {
+  position: fixed; bottom: 2rem; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--surface3);
+  color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  transition: transform 0.2s;
+  pointer-events: none;
+  z-index: 999;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">🌿 Research Hub</div>
+  <div class="nav-link active" data-page="home"    onclick="showPage('home')">🏠 Home</div>
+  <div class="nav-link"        data-page="sources"  onclick="showPage('sources')">📚 Sources</div>
+  <div class="nav-link"        data-page="research" onclick="showPage('research')">🔬 Research</div>
+  <div class="nav-link"        data-page="milestones" onclick="showPage('milestones')">🎯 Progress</div>
+</nav>
+
+<!-- ══════════ HOME ══════════ -->
+<div id="page-home" class="page active">
+  <div class="page-header">
+    <h2>🏠 Home</h2>
+    <p>Your research identity at a glance</p>
+  </div>
+
+  <div class="identity-hero">
+    <button class="edit-btn" onclick="openIdentityModal()">✏️ Edit</button>
+    <div class="discipline">Ed.D · Knowledge Transfer &amp; Scenario-Based Learning</div>
+    <h1 id="display-name">Your Name</h1>
+    <div class="identity-fields">
+      <div class="field-block full">
+        <span class="field-label">Research focus</span>
+        <div class="field-value serif" id="display-focus"><span class="empty">Click Edit to add your research focus</span></div>
+      </div>
+      <div class="field-block">
+        <span class="field-label">🏛️ Institution</span>
+        <div class="field-value" id="display-institution"><span class="empty">—</span></div>
+      </div>
+      <div class="field-block">
+        <span class="field-label">🎓 Advisor</span>
+        <div class="field-value" id="display-advisor"><span class="empty">—</span></div>
+      </div>
+      <div class="field-block full">
+        <span class="field-label">💬 Elevator pitch — what is your research about?</span>
+        <div class="field-value" id="display-pitch"><span class="empty">The 30-second answer when someone asks what you study</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><span class="stat-num" id="h-sources">0</span><div class="stat-lbl">📚 Sources</div></div>
+    <div class="stat-card"><span class="stat-num" id="h-rqs">0</span><div class="stat-lbl">🔬 Research Qs</div></div>
+    <div class="stat-card"><span class="stat-num" id="h-frameworks">0</span><div class="stat-lbl">🧩 Frameworks</div></div>
+    <div class="stat-card"><span class="stat-num" id="h-milestones">0</span><div class="stat-lbl">✅ Done</div></div>
+  </div>
+
+  <div class="milestone-row">
+    <h3>🎯 Progress at a glance</h3>
+    <div class="milestones" id="home-milestones">
+      <div class="empty-msg">Add milestones on the Progress tab</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SOURCES ══════════ -->
+<div id="page-sources" class="page">
+  <div class="page-header">
+    <h2>📚 Sources</h2>
+    <p>Your citation library, sorted alphabetically — APA 7th</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h2>➕ Add a source</h2></div>
+    <div class="panel-body">
+      <div class="form-row three">
+        <div class="form-col">
+          <span class="lbl">Author(s) — Last, F. I.</span>
+          <input id="s-authors" placeholder="Smith, J. A., &amp; Lee, B. C." />
+        </div>
+        <div class="form-col">
+          <span class="lbl">Year</span>
+          <input id="s-year" placeholder="2024" />
+        </div>
+        <div class="form-col">
+          <span class="lbl">Source type</span>
+          <select id="s-type">
+            <option value="article">Journal article</option>
+            <option value="book">Book</option>
+            <option value="chapter">Book chapter</option>
+            <option value="report">Report</option>
+            <option value="dissertation">Dissertation</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-full">
+        <span class="lbl">Title</span>
+        <input id="s-title" placeholder="Full title of the work" />
+      </div>
+      <div class="form-row">
+        <div class="form-col">
+          <span class="lbl">Journal / Publisher / Institution</span>
+          <input id="s-journal" placeholder="Journal of Applied Learning" />
+        </div>
+        <div class="form-col">
+          <span class="lbl">Volume(Issue), Pages or DOI/URL</span>
+          <input id="s-details" placeholder="12(3), 45–67  or  https://doi.org/..." />
+        </div>
+      </div>
+      <div class="form-full">
+        <span class="lbl">Abstract (optional)</span>
+        <textarea id="s-abstract" placeholder="Paste the abstract or a brief summary..."></textarea>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="btn btn-src" onclick="addSource()">➕ Add source</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h2>📖 Citation library</h2>
+      <span class="count" id="src-count">0 sources</span>
+    </div>
+    <div class="panel-body">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="src-search" placeholder="Search by author, title, or keyword..." oninput="renderSources()" />
+      </div>
+      <div id="sources-output"><div class="empty-msg">No sources yet — add one above</div></div>
+    </div>
+    <div class="data-actions">
+      <button class="btn btn-sm btn-src" onclick="exportAPA()">📋 Export APA list</button>
+      <button class="btn btn-sm" onclick="exportJSON()">💾 Export JSON</button>
+      <label class="btn btn-sm" style="cursor:pointer">📂 Import JSON<input type="file" accept=".json" onchange="importJSON(event)" style="display:none"></label>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ RESEARCH ══════════ -->
+<div id="page-research" class="page">
+  <div class="page-header">
+    <h2>🔬 Research</h2>
+    <p>Questions, frameworks, and the scholars shaping your work</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h2>❓ Research questions</h2><span class="count" id="rq-count">0</span></div>
+    <div class="panel-body">
+      <div class="form-full">
+        <span class="lbl">Research question</span>
+        <input id="rq-text" placeholder="How does scenario-based learning affect knowledge transfer in..." />
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:4px">
+        <button class="btn btn-res btn-sm" onclick="addRQ()">➕ Add</button>
+      </div>
+      <div class="divider"></div>
+      <div id="rq-list"><div class="empty-msg">No research questions yet</div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h2>🧩 Theoretical frameworks</h2><span class="count" id="fw-count">0</span></div>
+    <div class="panel-body">
+      <div class="form-row">
+        <div class="form-col">
+          <span class="lbl">Framework name</span>
+          <input id="fw-name" placeholder="e.g. Situated Learning Theory" />
+        </div>
+        <div class="form-col">
+          <span class="lbl">Scholar(s)</span>
+          <input id="fw-scholar" placeholder="e.g. Lave &amp; Wenger, 1991" />
+        </div>
+      </div>
+      <div class="form-full">
+        <span class="lbl">How it connects to your work</span>
+        <textarea id="fw-notes" placeholder="Briefly explain why this framework matters for your dissertation..."></textarea>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="btn btn-res btn-sm" onclick="addFramework()">➕ Add framework</button>
+      </div>
+      <div class="divider"></div>
+      <div id="fw-list"><div class="empty-msg">No frameworks yet</div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h2>🧑‍🎓 Key scholars</h2></div>
+    <div class="panel-body">
+      <div class="form-row">
+        <div class="form-col">
+          <span class="lbl">Name</span>
+          <input id="sc-name" placeholder="e.g. Roger Schank" />
+        </div>
+        <div class="form-col">
+          <span class="lbl">Known for</span>
+          <input id="sc-known" placeholder="e.g. Story-based learning, case-based reasoning" />
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:4px">
+        <button class="btn btn-res btn-sm" onclick="addScholar()">➕ Add</button>
+      </div>
+      <div class="divider"></div>
+      <div id="sc-list"><div class="empty-msg">No scholars yet</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MILESTONES ══════════ -->
+<div id="page-milestones" class="page">
+  <div class="page-header">
+    <h2>🎯 Progress</h2>
+    <p>Track milestones across your Ed.D journey</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h2>➕ Add milestone</h2></div>
+    <div class="panel-body">
+      <div class="form-row">
+        <div class="form-col">
+          <span class="lbl">Milestone</span>
+          <input id="ms-text" placeholder="e.g. Submit literature review draft" />
+        </div>
+        <div class="form-col">
+          <span class="lbl">Target date (optional)</span>
+          <input id="ms-date" type="date" />
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:4px">
+        <button class="btn btn-ms btn-sm" onclick="addMilestone()">➕ Add milestone</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <h2>📋 Milestones</h2>
+      <span class="count" id="ms-count">0 complete</span>
+    </div>
+    <div class="panel-body">
+      <div id="ms-list"><div class="empty-msg">No milestones yet — add some above</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- IDENTITY MODAL -->
+<div class="modal-overlay" id="identity-modal">
+  <div class="modal">
+    <h3>🌿 Your research identity</h3>
+    <div class="form-full"><span class="lbl">Your name</span><input id="m-name" placeholder="Your full name" /></div>
+    <div class="form-full"><span class="lbl">Institution</span><input id="m-institution" placeholder="University name" /></div>
+    <div class="form-full"><span class="lbl">Advisor</span><input id="m-advisor" placeholder="Advisor name" /></div>
+    <div class="form-full"><span class="lbl">Research focus — one sentence</span><input id="m-focus" placeholder="My research examines..." /></div>
+    <div class="form-full"><span class="lbl">Elevator pitch</span><textarea id="m-pitch" placeholder="What you say when someone at a party asks what you're researching..."></textarea></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('identity-modal')">Cancel</button>
+      <button class="btn btn-home" onclick="saveIdentity()">💾 Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- APA EXPORT MODAL -->
+<div id="export-modal" class="modal-overlay">
+  <div class="modal">
+    <h3>📋 APA 7th reference list</h3>
+    <pre id="export-text" class="export-pre"></pre>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('export-modal')">Close</button>
+      <button class="btn btn-src" onclick="copyExport()">📋 Copy all</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast">Saved</div>
+
+<script>
+const KEY = 'edd_hub_v3';
+let D = { identity: { name:'', institution:'', advisor:'', focus:'', pitch:'' }, sources:[], rqs:[], frameworks:[], scholars:[], milestones:[] };
+
+function load() { try { const s = localStorage.getItem(KEY); if (s) D = JSON.parse(s); } catch(e) {} }
+function save() { localStorage.setItem(KEY, JSON.stringify(D)); updateCounts(); }
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelector(`.nav-link[data-page="${id}"]`).classList.add('active');
+  if (id === 'home') renderHome();
+  if (id === 'sources') renderSources();
+  if (id === 'research') { renderRQs(); renderFrameworks(); renderScholars(); }
+  if (id === 'milestones') renderMilestones();
+}
+
+function updateCounts() {
+  const done = D.milestones.filter(m => m.done).length;
+  document.getElementById('h-sources').textContent = D.sources.length;
+  document.getElementById('h-rqs').textContent = D.rqs.length;
+  document.getElementById('h-frameworks').textContent = D.frameworks.length;
+  document.getElementById('h-milestones').textContent = done;
+  document.getElementById('src-count').textContent = D.sources.length + ' source' + (D.sources.length !== 1 ? 's' : '');
+  document.getElementById('rq-count').textContent = D.rqs.length;
+  document.getElementById('fw-count').textContent = D.frameworks.length;
+  document.getElementById('ms-count').textContent = done + ' complete';
+}
+
+/* IDENTITY */
+function openIdentityModal() {
+  ['name','institution','advisor','focus','pitch'].forEach(k => {
+    document.getElementById('m-' + k).value = D.identity[k] || '';
+  });
+  document.getElementById('identity-modal').classList.add('open');
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function saveIdentity() {
+  ['name','institution','advisor','focus','pitch'].forEach(k => {
+    D.identity[k] = document.getElementById('m-' + k).value.trim();
+  });
+  save(); renderHome(); closeModal('identity-modal'); toast('✅ Saved');
+}
+
+function setField(id, val, extraClass) {
+  const el = document.getElementById(id);
+  if (val) { el.innerHTML = val; el.className = 'field-value' + (extraClass ? ' ' + extraClass : ''); }
+  else { el.innerHTML = '<span class="empty">—</span>'; el.className = 'field-value'; }
+}
+
+function renderHome() {
+  const id = D.identity;
+  document.getElementById('display-name').textContent = id.name || 'Your Name';
+  setField('display-focus', id.focus, 'serif');
+  setField('display-institution', id.institution);
+  setField('display-advisor', id.advisor);
+  setField('display-pitch', id.pitch);
+  const ms = document.getElementById('home-milestones');
+  if (!D.milestones.length) { ms.innerHTML = '<div class="empty-msg">Add milestones on the Progress tab</div>'; return; }
+  ms.innerHTML = D.milestones.map((m, i) =>
+    `<div class="milestone ${m.done?'done':''}" onclick="toggleMilestone(${i})">
+      <div class="ms-check">${m.done?'✓':''}</div>
+      <span class="ms-label">${m.text}</span>
+      ${m.date ? `<span class="ms-date">${formatDate(m.date)}</span>` : ''}
+    </div>`).join('');
+}
+
+/* SOURCES */
+function buildAPA(s, html) {
+  const auth = s.authors || 'Unknown';
+  const yr   = s.year ? `(${s.year})` : '(n.d.)';
+  const title = s.title || 'Untitled';
+  const wrap = (t) => html ? `<em>${t}</em>` : t;
+  if (s.type === 'article')      return `${auth} ${yr}. ${title}. ${wrap(s.journal||'')}${s.details ? ', ' + s.details : ''}.`;
+  if (s.type === 'book')         return `${auth} ${yr}. ${wrap(title)}. ${s.journal||''}${s.details ? '. ' + s.details : ''}.`;
+  if (s.type === 'chapter')      return `${auth} ${yr}. ${title}. In ${wrap(s.journal||'Book title')}${s.details ? ' (' + s.details + ')' : ''}.`;
+  if (s.type === 'dissertation') return `${auth} ${yr}. ${wrap(title)} [Doctoral dissertation, ${s.journal||'Institution'}]. ${s.details||''}`;
+  return `${auth} ${yr}. ${title}. ${s.journal||''}${s.details ? '. ' + s.details : ''}.`;
+}
+
+function addSource() {
+  const authors = document.getElementById('s-authors').value.trim();
+  const title   = document.getElementById('s-title').value.trim();
+  if (!authors || !title) { alert('Please enter at least an author and title.'); return; }
+  D.sources.push({
+    authors, title,
+    year:     document.getElementById('s-year').value.trim(),
+    type:     document.getElementById('s-type').value,
+    journal:  document.getElementById('s-journal').value.trim(),
+    details:  document.getElementById('s-details').value.trim(),
+    abstract: document.getElementById('s-abstract').value.trim(),
+    id: Date.now()
+  });
+  ['s-authors','s-year','s-title','s-journal','s-details','s-abstract'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('s-type').value = 'article';
+  D.sources.sort((a,b) => (a.authors||'').localeCompare(b.authors||''));
+  save(); renderSources(); toast('📚 Source added');
+}
+
+function deleteSource(id) {
+  if (!confirm('Remove this source?')) return;
+  D.sources = D.sources.filter(s => s.id !== id);
+  save(); renderSources();
+}
+
+function renderSources() {
+  const q = (document.getElementById('src-search').value||'').toLowerCase();
+  const filtered = D.sources.filter(s =>
+    !q || (s.authors||'').toLowerCase().includes(q) ||
+    (s.title||'').toLowerCase().includes(q) ||
+    (s.abstract||'').toLowerCase().includes(q) ||
+    (s.journal||'').toLowerCase().includes(q)
+  );
+  const out = document.getElementById('sources-output');
+  if (!filtered.length) { out.innerHTML = `<div class="empty-msg">${q?'No matches found':'No sources yet — add one above'}</div>`; return; }
+  const labels = { article:'Journal article', book:'Book', chapter:'Chapter', report:'Report', dissertation:'Dissertation', other:'Other' };
+  let html = ''; let lastLetter = '';
+  filtered.forEach(s => {
+    const letter = (s.authors||'?')[0].toUpperCase();
+    if (letter !== lastLetter) { html += `<div class="alpha-divider">${letter}</div>`; lastLetter = letter; }
+    html += `<div class="cite-card">
+      <button class="del-btn" onclick="deleteSource(${s.id})" title="Remove">×</button>
+      <div class="cite-apa">${buildAPA(s, true)}</div>
+      <div class="cite-footer">
+        <span class="cite-tag tag-${s.type}">${labels[s.type]||'Other'}</span>
+        ${s.abstract ? `<button class="abstract-toggle" onclick="toggleAbstract(this)">show abstract</button>` : ''}
+      </div>
+      ${s.abstract ? `<div class="cite-abstract">${s.abstract}</div>` : ''}
+    </div>`;
+  });
+  out.innerHTML = html;
+  updateCounts();
+}
+
+function toggleAbstract(btn) {
+  const abs = btn.closest('.cite-card').querySelector('.cite-abstract');
+  btn.textContent = abs.classList.toggle('open') ? 'hide abstract' : 'show abstract';
+}
+
+function exportAPA() {
+  if (!D.sources.length) { alert('No sources to export yet.'); return; }
+  document.getElementById('export-text').textContent = D.sources.map(s => buildAPA(s, false)).join('\n\n');
+  document.getElementById('export-modal').classList.add('open');
+}
+
+function copyExport() {
+  navigator.clipboard.writeText(document.getElementById('export-text').textContent);
+  toast('📋 Copied to clipboard');
+}
+
+/* JSON EXPORT / IMPORT */
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(D, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'edd-research-hub-backup.json';
+  a.click();
+  toast('💾 JSON exported');
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!imported.sources && !imported.rqs && !imported.identity) {
+        alert('This doesn\'t look like a valid Research Hub backup file.');
+        return;
+      }
+      if (!confirm('This will merge imported data with your current data. Sources, research questions, frameworks, scholars, and milestones will be combined. Your identity info will be updated if the import contains it. Continue?')) return;
+      if (imported.identity && imported.identity.name) D.identity = imported.identity;
+      const mergeById = (existing, incoming) => {
+        const ids = new Set(existing.map(x => x.id));
+        return [...existing, ...(incoming||[]).filter(x => !ids.has(x.id))];
+      };
+      D.sources    = mergeById(D.sources, imported.sources).sort((a,b)=>(a.authors||'').localeCompare(b.authors||''));
+      D.rqs        = mergeById(D.rqs, imported.rqs);
+      D.frameworks = mergeById(D.frameworks, imported.frameworks);
+      D.scholars   = mergeById(D.scholars, imported.scholars);
+      D.milestones = mergeById(D.milestones, imported.milestones);
+      save(); renderHome(); renderSources();
+      toast('📂 Import complete');
+    } catch(err) {
+      alert('Could not read file. Make sure it\'s a valid JSON export from this app.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+/* RQs */
+function addRQ() {
+  const text = document.getElementById('rq-text').value.trim();
+  if (!text) return;
+  D.rqs.push({ text, id: Date.now() });
+  document.getElementById('rq-text').value = '';
+  save(); renderRQs(); toast('✅ Added');
+}
+
+function renderRQs() {
+  const el = document.getElementById('rq-list');
+  if (!D.rqs.length) { el.innerHTML = '<div class="empty-msg">No research questions yet</div>'; return; }
+  el.innerHTML = D.rqs.map((rq,i) =>
+    `<div class="item-card">
+      <button class="del-btn" onclick="deleteRQ(${rq.id})">×</button>
+      <div class="rq-num">RQ ${i+1}</div>
+      <p>${rq.text}</p>
+    </div>`).join('');
+  document.getElementById('rq-count').textContent = D.rqs.length;
+}
+
+function deleteRQ(id) { D.rqs = D.rqs.filter(r => r.id !== id); save(); renderRQs(); }
+
+/* FRAMEWORKS */
+function addFramework() {
+  const name = document.getElementById('fw-name').value.trim();
+  if (!name) return;
+  D.frameworks.push({ name, scholar: document.getElementById('fw-scholar').value.trim(), notes: document.getElementById('fw-notes').value.trim(), id: Date.now() });
+  ['fw-name','fw-scholar','fw-notes'].forEach(id => document.getElementById(id).value = '');
+  save(); renderFrameworks(); toast('🧩 Framework added');
+}
+
+function renderFrameworks() {
+  const el = document.getElementById('fw-list');
+  if (!D.frameworks.length) { el.innerHTML = '<div class="empty-msg">No frameworks yet</div>'; return; }
+  el.innerHTML = D.frameworks.map(fw =>
+    `<div class="item-card">
+      <button class="del-btn" onclick="deleteFramework(${fw.id})">×</button>
+      <h4>${fw.name}${fw.scholar ? ` <span style="font-weight:400;color:var(--text3)">· ${fw.scholar}</span>` : ''}</h4>
+      ${fw.notes ? `<p>${fw.notes}</p>` : ''}
+    </div>`).join('');
+  document.getElementById('fw-count').textContent = D.frameworks.length;
+}
+
+function deleteFramework(id) { D.frameworks = D.frameworks.filter(f => f.id !== id); save(); renderFrameworks(); }
+
+/* SCHOLARS */
+function addScholar() {
+  const name = document.getElementById('sc-name').value.trim();
+  if (!name) return;
+  D.scholars.push({ name, known: document.getElementById('sc-known').value.trim(), id: Date.now() });
+  ['sc-name','sc-known'].forEach(id => document.getElementById(id).value = '');
+  save(); renderScholars(); toast('✅ Added');
+}
+
+function renderScholars() {
+  const el = document.getElementById('sc-list');
+  if (!D.scholars.length) { el.innerHTML = '<div class="empty-msg">No scholars yet</div>'; return; }
+  el.innerHTML = D.scholars.map(sc => {
+    const initial = sc.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+    return `<div class="scholar-card">
+      <div class="scholar-initial">${initial}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;color:var(--text);padding-right:28px">${sc.name}</div>
+        ${sc.known ? `<div style="font-size:12px;color:var(--text2);margin-top:2px">${sc.known}</div>` : ''}
+      </div>
+      <button class="del-btn" style="position:absolute;top:10px;right:10px" onclick="deleteScholar(${sc.id})">×</button>
+    </div>`;
+  }).join('');
+}
+
+function deleteScholar(id) { D.scholars = D.scholars.filter(s => s.id !== id); save(); renderScholars(); }
+
+/* MILESTONES */
+function addMilestone() {
+  const text = document.getElementById('ms-text').value.trim();
+  if (!text) return;
+  D.milestones.push({ text, date: document.getElementById('ms-date').value, done: false, id: Date.now() });
+  ['ms-text','ms-date'].forEach(id => document.getElementById(id).value = '');
+  save(); renderMilestones(); toast('🎯 Milestone added');
+}
+
+function toggleMilestone(i) {
+  D.milestones[i].done = !D.milestones[i].done;
+  save(); renderMilestones(); renderHome();
+}
+
+function deleteMilestone(id) {
+  D.milestones = D.milestones.filter(m => m.id !== id);
+  save(); renderMilestones();
+}
+
+function renderMilestones() {
+  const el = document.getElementById('ms-list');
+  if (!D.milestones.length) { el.innerHTML = '<div class="empty-msg">No milestones yet</div>'; return; }
+  el.innerHTML = D.milestones.map((m,i) =>
+    `<div class="milestone ${m.done?'done':''}" onclick="toggleMilestone(${i})">
+      <div class="ms-check">${m.done?'✓':''}</div>
+      <span class="ms-label">${m.text}</span>
+      ${m.date ? `<span class="ms-date">${formatDate(m.date)}</span>` : ''}
+      <button class="del-btn" style="position:static;margin-left:auto;font-size:16px" onclick="event.stopPropagation();deleteMilestone(${m.id})">×</button>
+    </div>`).join('');
+  const done = D.milestones.filter(m => m.done).length;
+  document.getElementById('ms-count').textContent = done + ' complete';
+  updateCounts();
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  const [y,mo,day] = d.split('-');
+  return new Date(y, mo-1, day).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+}
+
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
+});
+
+load(); renderHome(); updateCounts();
+</script>
+</body>
+</html>
